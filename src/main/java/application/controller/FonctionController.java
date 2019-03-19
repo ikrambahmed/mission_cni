@@ -6,22 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import application.model.Categorie;
-import application.service.Categoriedao;
+import application.model.Fonction;
+import application.service.Fonctiondao;
+
 
 @RestController
-@RequestMapping("/api")
-@CrossOrigin("*")
-public class CategorieController {
+@RequestMapping("/api/listfonction")
+@CrossOrigin
+
+public class FonctionController {
 	@Autowired
-	Categoriedao categoriedao;
+	Fonctiondao fonctiondao;
 	
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-	public List<Categorie> getAllCategories(){
-		return categoriedao.findAll();
+	@GetMapping
+	public List<Fonction> getAllfonction(){
+		return fonctiondao.findAll();
 	}
-    
+
+
 }

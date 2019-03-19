@@ -24,6 +24,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.JoinColumnsOrFormulas;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "MISSIONNAIRE")
 public class Missionnaire implements Serializable {
@@ -147,6 +149,8 @@ public class Missionnaire implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Grade grade;
     
+  
+  
   
 @JoinColumn(name = "CODGRP", referencedColumnName = "CODGRP", nullable = false )
 @ManyToOne(optional = false, fetch = FetchType.LAZY)
