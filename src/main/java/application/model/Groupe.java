@@ -17,28 +17,30 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author dell
- */
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 @Entity
 @Table(name = "GROUPE")
+@XmlRootElement
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Groupe implements Serializable {
 	
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "CODGRP", nullable = false, length = 1)
+    @Column(name = "CODGRP")
     private String codgrp;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "LIBGRP", nullable = false, length = 60)
+    @Column(name = "LIBGRP")
     private String libgrp;
     @Column(name = "LIBGRPL", length = 60)
     private String libgrpl;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codgrp", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<Missionnaire> missionnaireCollection;
 
 	public Groupe() {
@@ -78,6 +80,7 @@ public class Groupe implements Serializable {
 	public void setLibgrpl(String libgrpl) {
 		this.libgrpl = libgrpl;
 	}
+    @XmlTransient
 
 	public Collection<Missionnaire> getMissionnaireCollection() {
 		return missionnaireCollection;

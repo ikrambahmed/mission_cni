@@ -16,13 +16,11 @@ package application.model;
 		private static final long serialVersionUID = 1L;
 
 		@Basic(optional = false)
-	    @NotNull
-	    @Column(name = "CODE", nullable = false, length = 6)
+	    @Column(name = "CODE")
 	    private String code;
 	   
 	    @Basic(optional = false)
-	    @NotNull
-	    @Column(name = "COD_GRD", nullable = false, length = 2)
+	    @Column(name = "COD_GRD")
 	    private String codGrd;
 
 	    

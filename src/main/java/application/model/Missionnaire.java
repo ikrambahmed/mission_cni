@@ -22,14 +22,19 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.JoinColumnOrFormula;
 import org.hibernate.annotations.JoinColumnsOrFormulas;
+import org.hibernate.annotations.JoinFormula;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "MISSIONNAIRE")
+@XmlRootElement
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Missionnaire implements Serializable {
-
+	
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -125,28 +130,22 @@ public class Missionnaire implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Classe classgrd;
     
-   /* @JoinColumn(name = "COD_FONCTION" , referencedColumnName = "COD_FONCTION")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Fonction fonnction ;
-    */
 
-
-    @JoinColumn(name = "CODE", referencedColumnName = "CODE", nullable = false , insertable=false, updatable=false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "CODE", referencedColumnName = "CODE")
+    @ManyToOne(optional = false)
     private DeptGen codedept;
     
     @JoinColumns({
-        @JoinColumn(name = "CODE", referencedColumnName = "CODE",  nullable = false , insertable=false, updatable=false)
+        @JoinColumn(name = "CODE", referencedColumnName = "CODE", insertable=false, updatable=false)
         , @JoinColumn(name = "COD_FONCTION", referencedColumnName = "COD_FONCTION" ,  nullable = false, insertable=false, updatable=false )})
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Fonction fonction;
     
 
-
   @JoinColumns({
-        @JoinColumn(name = "CODE",referencedColumnName = "CODE", nullable = false ,  insertable=false, updatable=false)
-        , @JoinColumn(name = "COD_GRD",referencedColumnName="COD_GRD", nullable=false ,  insertable=false, updatable=false)})
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+        @JoinColumn(name = "CODE",referencedColumnName = "CODE" ,  insertable=false, updatable=false)
+        , @JoinColumn(name = "COD_GRD",referencedColumnName="COD_GRD" ,  insertable=false, updatable=false)})
+    @ManyToOne(optional = false)
     private Grade grade;
     
   
@@ -624,6 +623,9 @@ public static long getSerialversionuid() {
 
 
 
+
+
+
 public Missionnaire(@NotNull @Size(min = 1, max = 20) String cin, @Size(max = 10) String matricule,
 		@NotNull @Size(min = 1, max = 30) String noma, @NotNull @Size(min = 1, max = 30) String prena,
 		@Size(max = 30) String noml, @Size(max = 30) String prenl,
@@ -659,8 +661,6 @@ public Missionnaire(@NotNull @Size(min = 1, max = 20) String cin, @Size(max = 10
 	this.grade = grade;
 	this.codgrp = codgrp;
 }
-
-
 
 
 

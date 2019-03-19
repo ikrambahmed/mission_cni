@@ -2,11 +2,15 @@ package application.model;
 
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 /**
@@ -15,6 +19,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name="categorie")
+@XmlRootElement
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Categorie implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,10 +34,18 @@ public class Categorie implements Serializable {
 	private String libCatFr;
 	
 	
+	public void setMissionaires(Collection<Missionnaire> missionaires) {
+		this.missionaires = missionaires;
+	}
+
+
+
+
+
 	//bi-directional many-to-one association to Missionaire
 	@OneToMany(mappedBy="codCat")
 	@JsonIgnore
-	private List<Missionnaire> missionaires;
+	private Collection <Missionnaire> missionaires;
 	
 	public Categorie() {
 	}
@@ -128,8 +142,8 @@ public class Categorie implements Serializable {
 
 
 
-
-	public List<Missionnaire> getMissionaires() {
+    @XmlTransient
+	public Collection<Missionnaire> getMissionaires() {
 		return missionaires;
 	}
 
@@ -150,7 +164,7 @@ public class Categorie implements Serializable {
 		this.codeCat = codeCat;
 		this.libCatAr = libCatAr;
 		this.libCatFr = libCatFr;
-		this.missionaires = missionaires;
+		//this.missionaires = missionaires;
 	}
 	
 

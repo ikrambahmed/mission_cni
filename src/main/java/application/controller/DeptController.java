@@ -13,8 +13,8 @@ import application.service.Deptdao;
 
 
 @RestController
-@RequestMapping("/api/listdept")
-@CrossOrigin
+@RequestMapping("/api")
+@CrossOrigin("*")
 
 public class DeptController {
 	
@@ -25,6 +25,5 @@ public class DeptController {
 	public List<DeptGen> getAlldept(){
 		return deptdao.findAll();
 	}
-
 
 }

@@ -22,8 +22,8 @@ import application.service.MissionnaireService;
 
 
 @RestController
-@RequestMapping("/api/missionaire")
-@CrossOrigin
+@RequestMapping("/api")
+@CrossOrigin("*")
 public class MissionnaireController {
 	
 	@Autowired
@@ -35,7 +35,7 @@ public class MissionnaireController {
 		  return missionaireService.getMissionnaire(cin) ; 
 	    }
 		
-	@GetMapping
+	@GetMapping("/missionaire")
 	public List<Missionnaire> getMissionaires() {
 		return missionaireService.getMissionnaires() ; 
 		

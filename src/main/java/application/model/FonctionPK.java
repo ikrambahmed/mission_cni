@@ -15,14 +15,12 @@ import javax.validation.constraints.Size;
 public class FonctionPK implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 6)
-    @Column(name = "CODE", nullable = false, length = 6)
+    @Column(name = "CODE")
     private String code;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2)
-    @Column(name = "COD_FONCTION", nullable = false, length = 2)
+    @Column(name = "COD_FONCTION")
     private String codFonction;
 
     public FonctionPK() {

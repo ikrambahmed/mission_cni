@@ -16,9 +16,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "FONCTION")
+@XmlRootElement
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Fonction implements Serializable {
     private static final long serialVersionUID = 1L; 
    
@@ -34,17 +42,49 @@ public class Fonction implements Serializable {
     @Column(name = "LIB_FONCL", length = 120)
     private String libFoncl;
     
-    @Basic(optional = false)
+    public Collection<Missionnaire> getMissionnairecollection() {
+		return missionnairecollection;
+	}
+
+	public void setMissionnairecollection(Collection<Missionnaire> missionnairecollection) {
+		this.missionnairecollection = missionnairecollection;
+	}
+
+	@Basic(optional = false)
     @NotNull
     @Column(name = "TYP_FONC", nullable = false, length = 1)
     private String typFonc;
 	
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fonction", fetch = FetchType.LAZY)
-    private Collection<Missionnaire> missionnaireCollection;
+   @OneToMany(cascade = CascadeType.ALL, mappedBy = "fonction", fetch = FetchType.LAZY)
+   @JsonIgnore
+   private Collection<Missionnaire> missionnairecollection;
 
+    
+    
 	@JoinColumn(name="CODE", nullable = false , insertable=false , updatable=false)
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@ManyToOne
     private DeptGen deptGen;
+	
+	
+	
+
+	
+
+	/*public Collection<Missionnaire> getMissionnairecollection() {
+		return missionnairecollection;
+	}
+
+	public void setMissionnairecollection(Collection<Missionnaire> missionnairecollection) {
+		this.missionnairecollection = missionnairecollection;
+	}*/
+
+	public DeptGen getDeptGen() {
+		return deptGen;
+	}
+
+	public void setDeptGen(DeptGen deptGen) {
+		this.deptGen = deptGen;
+	}
 
 	public Fonction() {
 		super();
@@ -58,8 +98,8 @@ public class Fonction implements Serializable {
 		this.libFonca = libFonca;
 		this.libFoncl = libFoncl;
 		this.typFonc = typFonc;
-		this.missionnaireCollection = missionnaireCollection;
-		this.deptGen = deptGen;
+		this.missionnairecollection = missionnaireCollection;
+		//this.deptGen = deptGen;
 	}
 
 	public FonctionPK getFonctionPK() {
@@ -93,22 +133,18 @@ public class Fonction implements Serializable {
 	public void setTypFonc(String typFonc) {
 		this.typFonc = typFonc;
 	}
-
+    
+	   @JsonIgnore
 	public Collection<Missionnaire> getMissionnaireCollection() {
-		return missionnaireCollection;
+		return missionnairecollection;
 	}
-
+	   
+	   
 	public void setMissionnaireCollection(Collection<Missionnaire> missionnaireCollection) {
-		this.missionnaireCollection = missionnaireCollection;
+		this.missionnairecollection = missionnaireCollection;
 	}
 
-	public DeptGen getDeptGen() {
-		return deptGen;
-	}
-
-	public void setDeptGen(DeptGen deptGen) {
-		this.deptGen = deptGen;
-	}
+	
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -118,63 +154,15 @@ public class Fonction implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((deptGen == null) ? 0 : deptGen.hashCode());
 		result = prime * result + ((fonctionPK == null) ? 0 : fonctionPK.hashCode());
 		result = prime * result + ((libFonca == null) ? 0 : libFonca.hashCode());
 		result = prime * result + ((libFoncl == null) ? 0 : libFoncl.hashCode());
-		result = prime * result + ((missionnaireCollection == null) ? 0 : missionnaireCollection.hashCode());
+	//	result = prime * result + ((missionnairecollection == null) ? 0 : missionnairecollection.hashCode());
 		result = prime * result + ((typFonc == null) ? 0 : typFonc.hashCode());
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Fonction other = (Fonction) obj;
-		if (deptGen == null) {
-			if (other.deptGen != null)
-				return false;
-		} else if (!deptGen.equals(other.deptGen))
-			return false;
-		if (fonctionPK == null) {
-			if (other.fonctionPK != null)
-				return false;
-		} else if (!fonctionPK.equals(other.fonctionPK))
-			return false;
-		if (libFonca == null) {
-			if (other.libFonca != null)
-				return false;
-		} else if (!libFonca.equals(other.libFonca))
-			return false;
-		if (libFoncl == null) {
-			if (other.libFoncl != null)
-				return false;
-		} else if (!libFoncl.equals(other.libFoncl))
-			return false;
-		if (missionnaireCollection == null) {
-			if (other.missionnaireCollection != null)
-				return false;
-		} else if (!missionnaireCollection.equals(other.missionnaireCollection))
-			return false;
-		if (typFonc == null) {
-			if (other.typFonc != null)
-				return false;
-		} else if (!typFonc.equals(other.typFonc))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Fonction [fonctionPK=" + fonctionPK + ", libFonca=" + libFonca + ", libFoncl=" + libFoncl + ", typFonc="
-				+ typFonc + ", missionnaireCollection=" + missionnaireCollection + ", deptGen=" + deptGen + "]";
-	}
-    
+	
    
 	
 }

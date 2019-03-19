@@ -19,29 +19,46 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 @Entity
 @Table(name = "GRADE")
+@XmlRootElement
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Grade implements Serializable {
     private static final long serialVersionUID = 1L;
+   
     @EmbeddedId
-    protected GradePK gradePK;
+    private GradePK gradePK;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "LIB_GRDA", nullable = false, length = 120)
     private String libGrda;
     @Column(name = "LIB_GRDL", length = 120)
     private String libGrdl;
     
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "grade", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<Missionnaire> missionnaireCollection;
     
-
+    
 	@JoinColumn(name="CODE", nullable = false , insertable=false , updatable=false)
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(optional = false)
     private DeptGen deptGen;
+	
+
+
+	public DeptGen getDeptGen() {
+		return deptGen;
+	}
+
+
+	public void setDeptGen(DeptGen deptGen) {
+		this.deptGen = deptGen;
+	}
 
 
 	public Grade() {
@@ -57,7 +74,7 @@ public class Grade implements Serializable {
 		this.libGrda = libGrda;
 		this.libGrdl = libGrdl;
 		this.missionnaireCollection = missionnaireCollection;
-		this.deptGen = deptGen;
+		//this.deptGen = deptGen;
 	}
 
 
@@ -90,7 +107,7 @@ public class Grade implements Serializable {
 		this.libGrdl = libGrdl;
 	}
 
-
+  @XmlTransient
 	public Collection<Missionnaire> getMissionnaireCollection() {
 		return missionnaireCollection;
 	}
@@ -101,14 +118,6 @@ public class Grade implements Serializable {
 	}
 
 
-	public DeptGen getDeptGen() {
-		return deptGen;
-	}
-
-
-	public void setDeptGen(DeptGen deptGen) {
-		this.deptGen = deptGen;
-	}
 
 
 	public static long getSerialversionuid() {
@@ -120,59 +129,14 @@ public class Grade implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((deptGen == null) ? 0 : deptGen.hashCode());
 		result = prime * result + ((gradePK == null) ? 0 : gradePK.hashCode());
 		result = prime * result + ((libGrda == null) ? 0 : libGrda.hashCode());
 		result = prime * result + ((libGrdl == null) ? 0 : libGrdl.hashCode());
-		result = prime * result + ((missionnaireCollection == null) ? 0 : missionnaireCollection.hashCode());
+		//result = prime * result + ((missionnaireCollection == null) ? 0 : missionnaireCollection.hashCode());
 		return result;
 	}
 
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Grade other = (Grade) obj;
-		if (deptGen == null) {
-			if (other.deptGen != null)
-				return false;
-		} else if (!deptGen.equals(other.deptGen))
-			return false;
-		if (gradePK == null) {
-			if (other.gradePK != null)
-				return false;
-		} else if (!gradePK.equals(other.gradePK))
-			return false;
-		if (libGrda == null) {
-			if (other.libGrda != null)
-				return false;
-		} else if (!libGrda.equals(other.libGrda))
-			return false;
-		if (libGrdl == null) {
-			if (other.libGrdl != null)
-				return false;
-		} else if (!libGrdl.equals(other.libGrdl))
-			return false;
-		if (missionnaireCollection == null) {
-			if (other.missionnaireCollection != null)
-				return false;
-		} else if (!missionnaireCollection.equals(other.missionnaireCollection))
-			return false;
-		return true;
-	}
-
-
-	@Override
-	public String toString() {
-		return "Grade [gradePK=" + gradePK + ", libGrda=" + libGrda + ", libGrdl=" + libGrdl
-				+ ", missionnaireCollection=" + missionnaireCollection + ", deptGen=" + deptGen + "]";
-	}
-	
 	
     
     

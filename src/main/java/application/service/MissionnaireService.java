@@ -15,6 +15,7 @@ public class MissionnaireService implements IMissionnaire {
     @Autowired
 	private MissionnaireRepository missionnaireRepository ; 
 	 
+    
 	@Override
 	public List<Missionnaire> getMissionnaires() {
 		// TODO Auto-generated method stub
@@ -42,10 +43,12 @@ public class MissionnaireService implements IMissionnaire {
 		missionnaireRepository.delete(missionaire);
 	}
 
-	
-	public Optional<Missionnaire> getMissionnaire(String cin ) {
+	public Optional<Missionnaire> getMissionnaire(String cin) {
 		// TODO Auto-generated method stub
-		return missionnaireRepository.getMiss(cin)  ; 
+		return null;
 	}
+
+	
+	
 
 }

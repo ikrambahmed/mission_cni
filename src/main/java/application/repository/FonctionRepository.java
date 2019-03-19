@@ -7,7 +7,6 @@ import application.model.Fonction;
 import application.model.FonctionPK;
 
 @Repository
-
 public interface FonctionRepository extends JpaRepository<Fonction, FonctionPK>{
 
 }

@@ -6,8 +6,11 @@ import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 /**
@@ -16,6 +19,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "CLASSE")
+@XmlRootElement
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Classe implements Serializable {
 	private static final long serialVersionUID = 1L;
     @Id
@@ -33,9 +39,12 @@ public class Classe implements Serializable {
     @Column(name = "LIBCLASSGRDL", length = 30)
     private String libclassgrdl;
    
-    @OneToMany(mappedBy = "classgrd", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "classgrd", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<Missionnaire> missionnaireCollection;
 
+    
+    
 	
 	//bi-directional many-to-one association to Missionaire
 	/*@OneToMany(mappedBy="classgrd")
@@ -43,10 +52,11 @@ public class Classe implements Serializable {
 	private List<Missionnaire> missionaires;*/
 		
 	public Classe() {
+		super() ; 
 	}
 	
 	
-
+    @XmlTransient
 	public Collection<Missionnaire> getMissionnaireCollection() {
 		return missionnaireCollection;
 	}

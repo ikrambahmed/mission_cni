@@ -17,23 +17,25 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  *
  * @author dell
  */
 @Entity
 @Table(name = "DEPT_GEN")
-
+@XmlRootElement
 public class DeptGen implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @NotNull
-    @Column(name = "CODE", nullable = false, length = 6)
+    @Column(name = "CODE")
     private String code;
     
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "LIB_A", nullable = false, length = 120)
     private String libA;
     
@@ -41,12 +43,12 @@ public class DeptGen implements Serializable {
     private String libL;
     
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "TYP_DEPT", nullable = false, length = 1)
     private String typDept;
     
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "CPT_MISSION", nullable = false)
     private short cptMission;
     
@@ -56,29 +58,43 @@ public class DeptGen implements Serializable {
     @Column(name = "CPT_NOP")
     private Integer cptNop;
     
-    @Size(max = 8)
+   // @Size(max = 8)
     @Column(name = "COD_COMM", length = 8)
     private String codComm;
-   
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "deptGen", fetch = FetchType.LAZY)
-    private Collection<Fonction> fonctionCollection;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codedept", fetch = FetchType.LAZY)
-    private Collection<Missionnaire> missionnaireCollection;
-   
-   @OneToMany(cascade = CascadeType.ALL, mappedBy = "deptGen", fetch = FetchType.LAZY)
-    private Collection<Grade> gradeCollection;
-
-    public Collection<Grade> getGradeCollection() {
-	return gradeCollection;
-}
-
-public void setGradeCollection(Collection<Grade> gradeCollection) {
-	this.gradeCollection = gradeCollection;
-}
-
 	public DeptGen() {
+		super() ; 
     }
+
+   
+   /* @OneToMany(mappedBy = "deptGen", fetch = FetchType.LAZY)
+    private Collection<Fonction> fonctionCollection;*/
+    
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "codedept", fetch = FetchType.LAZY)
+    private Collection<Missionnaire> missionnaireCollection;*/
+   
+   /* @OneToMany(mappedBy = "deptGen", fetch = FetchType.LAZY)
+    private Collection<Grade> gradeCollection;
+*/
+    
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "codedept", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Collection<Missionnaire> missionnairesCollection;
+    
+    
+    
+   
+
+    public Collection<Missionnaire> getMissionnairesCollection() {
+		return missionnairesCollection;
+	}
+
+	public void setMissionnairesCollection(Collection<Missionnaire> missionnairesCollection) {
+		this.missionnairesCollection = missionnairesCollection;
+	}
+
+
+
 
     public DeptGen(String code) {
         this.code = code;
@@ -181,30 +197,8 @@ public void setGradeCollection(Collection<Grade> gradeCollection) {
     public String toString() {
         return "entities.DeptGen[ code=" + code + " ]";
     }
-
-	public Collection<Fonction> getFonctionCollection() {
-		return fonctionCollection;
-	}
-
-	public void setFonctionCollection(Collection<Fonction> fonctionCollection) {
-		this.fonctionCollection = fonctionCollection;
-	}
-
-/*	public Collection<Missionnaire> getMissionnaireCollection() {
-		return missionnaireCollection;
-	}
-
-	public void setMissionnaireCollection(Collection<Missionnaire> missionnaireCollection) {
-		this.missionnaireCollection = missionnaireCollection;
-	}
-*/
-	/*public Collection<Grade> getGradeCollection() {
-		return gradeCollection;
-	}
-
-	public void setGradeCollection(Collection<Grade> gradeCollection) {
-		this.gradeCollection = gradeCollection;
-	}*/
+  
+	
 	public DeptGen(@NotNull @Size(min = 1, max = 6) String code, @NotNull @Size(min = 1, max = 120) String libA,
 			@Size(max = 120) String libL, @NotNull @Size(min = 1, max = 1) String typDept, @NotNull short cptMission,
 			Integer cptNbp, Integer cptNop, @Size(max = 8) String codComm, Collection<Fonction> fonctionCollection,
@@ -218,19 +212,12 @@ public void setGradeCollection(Collection<Grade> gradeCollection) {
 		this.cptNbp = cptNbp;
 		this.cptNop = cptNop;
 		this.codComm = codComm;
-	this.fonctionCollection = fonctionCollection;
-	this.missionnaireCollection = missionnaireCollection;
-		//this.gradeCollection = gradeCollection;
+	//this.fonctionCollection = fonctionCollection;
+	this.missionnairesCollection = missionnaireCollection;
+	//	this.gradeCollection = gradeCollection;
 	}
 
-	public Collection<Missionnaire> getMissionnaireCollection() {
-		return missionnaireCollection;
-	}
-
-	public void setMissionnaireCollection(Collection<Missionnaire> missionnaireCollection) {
-		this.missionnaireCollection = missionnaireCollection;
-	}
-    
+	
     
     
 }
