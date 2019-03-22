@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import application.service.ICrudService;
-@CrossOrigin
+@CrossOrigin("*")
 public class CrudController<T, ID> {
 
 	@Autowired

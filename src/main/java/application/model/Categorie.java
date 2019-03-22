@@ -20,13 +20,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name="categorie")
 @XmlRootElement
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Categorie implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name="COD_CAT")
 	private String codeCat;
+	
 	@Column(name="LIB_CATA")
 	private String libCatAr;
 
@@ -34,32 +34,32 @@ public class Categorie implements Serializable {
 	private String libCatFr;
 	
 	
-	public void setMissionaires(Collection<Missionnaire> missionaires) {
-		this.missionaires = missionaires;
-	}
-
-
-
-
-
-	//bi-directional many-to-one association to Missionaire
-	@OneToMany(mappedBy="codCat")
+	@OneToMany(mappedBy = "codCat")
 	@JsonIgnore
-	private Collection <Missionnaire> missionaires;
+    private Collection<Missionnaire> missionnaireCollection;
+
 	
-	public Categorie() {
+	
+
+    @JsonIgnore	
+	public Collection<Missionnaire> getMissionnaireCollection() {
+		return missionnaireCollection;
 	}
 
-	
 
-	
+	public void setMissionnaireCollection(Collection<Missionnaire> missionnaireCollection) {
+		this.missionnaireCollection = missionnaireCollection;
+	}
+
+
+	public Categorie() {
+		super() ; 
+	}
+
 
 	public String getCodeCat() {
 		return codeCat;
 	}
-
-
-
 
 
 	public void setCodeCat(String codeCat) {
@@ -67,27 +67,37 @@ public class Categorie implements Serializable {
 	}
 
 
-
-
-
 	public String getLibCatAr() {
-		return this.libCatAr;
+		return libCatAr;
 	}
+
 
 	public void setLibCatAr(String libCatAr) {
 		this.libCatAr = libCatAr;
 	}
 
+
 	public String getLibCatFr() {
-		return this.libCatFr;
+		return libCatFr;
 	}
+
 
 	public void setLibCatFr(String libCatFr) {
 		this.libCatFr = libCatFr;
 	}
 
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
+
+	public Categorie(String codeCat, String libCatAr, String libCatFr) {
+		super();
+		this.codeCat = codeCat;
+		this.libCatAr = libCatAr;
+		this.libCatFr = libCatFr;
+	}
 
 
 	@Override
@@ -97,11 +107,9 @@ public class Categorie implements Serializable {
 		result = prime * result + ((codeCat == null) ? 0 : codeCat.hashCode());
 		result = prime * result + ((libCatAr == null) ? 0 : libCatAr.hashCode());
 		result = prime * result + ((libCatFr == null) ? 0 : libCatFr.hashCode());
+		result = prime * result + ((missionnaireCollection == null) ? 0 : missionnaireCollection.hashCode());
 		return result;
 	}
-
-
-
 
 
 	@Override
@@ -128,45 +136,19 @@ public class Categorie implements Serializable {
 				return false;
 		} else if (!libCatFr.equals(other.libCatFr))
 			return false;
+		if (missionnaireCollection == null) {
+			if (other.missionnaireCollection != null)
+				return false;
+		} else if (!missionnaireCollection.equals(other.missionnaireCollection))
+			return false;
 		return true;
 	}
-
-
-
-
-
-	@Override
-	public String toString() {
-		return "Categorie [codeCat=" + codeCat + ", libCatAr=" + libCatAr + ", libCatFr=" + libCatFr + "]";
-	}
-
-
-
-    @XmlTransient
-	public Collection<Missionnaire> getMissionaires() {
-		return missionaires;
-	}
-
-
-
-
-
-	public void setMissionaires(List<Missionnaire> missionaires) {
-		this.missionaires = missionaires;
-	}
-
-
-
-
-
-	public Categorie(String codeCat, String libCatAr, String libCatFr, List<Missionnaire> missionaires) {
-		super();
-		this.codeCat = codeCat;
-		this.libCatAr = libCatAr;
-		this.libCatFr = libCatFr;
-		//this.missionaires = missionaires;
-	}
 	
+
+	
+
+
+
 
 	
 }

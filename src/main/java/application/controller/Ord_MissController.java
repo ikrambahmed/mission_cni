@@ -6,32 +6,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import application.model.Fonction;
+import application.model.Mission;
 import application.model.Missionnaire;
-import application.service.Fonctiondao;
-
+import application.model.OrdMis;
+import application.service.Missiondao;
+import application.service.Ord_MissDao;
 
 @RestController
-@RequestMapping("/api/listfonction")
-@CrossOrigin("*")
-public class FonctionController {
+@RequestMapping("/api/ordMiss")
+@CrossOrigin
+public class Ord_MissController  {
+
 	@Autowired
-	Fonctiondao fonctiondao;
+	Ord_MissDao ordMissDao;
+	
 	
 	@GetMapping
-	public List<Fonction> getAllfonction(){
-		return fonctiondao.findAll();
-	}
-	@PostMapping
-	public void addfonct(@RequestBody Fonction missionaire)
-	{
-		fonctiondao.addfonct(missionaire);
+	public List<OrdMis> getOrds() {
+		return ordMissDao. findAll(); 
+		
 	}
 	
-
-
+	@PostMapping
+	public void addOrdMiss(@RequestBody OrdMis ordMiss)
+	{
+		 ordMissDao.ajouter(ordMiss);
+	}
+	
+	@PutMapping
+	public void Modiford(@RequestBody OrdMis o) {
+		ordMissDao.updateOrd(o);
+		
+	}
 }

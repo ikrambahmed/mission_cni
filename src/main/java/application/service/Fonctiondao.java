@@ -25,5 +25,9 @@ public class Fonctiondao {
 		return fonctionrepository.findAll();
 	}
 
+	public void addfonct(Fonction missionaire) {
+     	fonctionrepository.save(missionaire)	 ; 
+	}
+
 
 }

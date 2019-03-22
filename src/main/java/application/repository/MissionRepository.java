@@ -3,10 +3,10 @@ package application.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import application.model.Fonction;
-import application.model.FonctionPK;
+import application.model.Mission;
+import application.model.MissionPK;
 
 @Repository
-public interface FonctionRepository extends JpaRepository<Fonction,FonctionPK>{
+public interface MissionRepository extends JpaRepository<Mission, MissionPK> {
 
 }

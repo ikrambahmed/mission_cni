@@ -20,54 +20,50 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "CLASSE")
 @XmlRootElement
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
 public class Classe implements Serializable {
 	private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "CLASSGRD", nullable = false, length = 1)
-    
+    @Column(name = "CLASSGRD")
     private String classgrd;
-    @Basic(optional = false)
-    @NotNull
+  
 
-    @Column(name = "LIBCLASSGRDA", nullable = false, length = 30)
+    @Column(name = "LIBCLASSGRDA")
     private String libclassgrda;
 
-    @Column(name = "LIBCLASSGRDL", length = 30)
+    @Column(name = "LIBCLASSGRDL")
     private String libclassgrdl;
-   
-    @OneToMany(mappedBy = "classgrd", fetch = FetchType.LAZY)
+    
+    
+    
+
+    @OneToMany(mappedBy = "classgrd", fetch = FetchType.EAGER)
     @JsonIgnore
     private Collection<Missionnaire> missionnaireCollection;
 
+ 
     
     
-	
-	//bi-directional many-to-one association to Missionaire
-	/*@OneToMany(mappedBy="classgrd")
-	@JsonIgnore
-	private List<Missionnaire> missionaires;*/
-		
-	public Classe() {
-		super() ; 
-	}
-	
-	
-    @XmlTransient
+    @JsonIgnore
 	public Collection<Missionnaire> getMissionnaireCollection() {
 		return missionnaireCollection;
 	}
-
-
 
 	public void setMissionnaireCollection(Collection<Missionnaire> missionnaireCollection) {
 		this.missionnaireCollection = missionnaireCollection;
 	}
 
+	public Classe() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
+	public Classe(String classgrd, String libclassgrda, String libclassgrdl) {
+		super();
+		this.classgrd = classgrd;
+		this.libclassgrda = libclassgrda;
+		this.libclassgrdl = libclassgrdl;
+	}
 
 	public String getClassgrd() {
 		return classgrd;
@@ -93,6 +89,10 @@ public class Classe implements Serializable {
 		this.libclassgrdl = libclassgrdl;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -100,6 +100,7 @@ public class Classe implements Serializable {
 		result = prime * result + ((classgrd == null) ? 0 : classgrd.hashCode());
 		result = prime * result + ((libclassgrda == null) ? 0 : libclassgrda.hashCode());
 		result = prime * result + ((libclassgrdl == null) ? 0 : libclassgrdl.hashCode());
+		result = prime * result + ((missionnaireCollection == null) ? 0 : missionnaireCollection.hashCode());
 		return result;
 	}
 
@@ -127,26 +128,14 @@ public class Classe implements Serializable {
 				return false;
 		} else if (!libclassgrdl.equals(other.libclassgrdl))
 			return false;
+		if (missionnaireCollection == null) {
+			if (other.missionnaireCollection != null)
+				return false;
+		} else if (!missionnaireCollection.equals(other.missionnaireCollection))
+			return false;
 		return true;
 	}
-
-	/*public Collection<Missionnaire> getMissionnaireCollection() {
-		return missionnaireCollection;
-	}
-
-	public void setMissionnaireCollection(Collection<Missionnaire> missionnaireCollection) {
-		this.missionnaireCollection = missionnaireCollection;
-	}
-*/
-	/*public List<Missionnaire> getMissionaires() {
-		return missionaires;
-	}
-
-	public void setMissionaires(List<Missionnaire> missionaires) {
-		this.missionaires = missionaires;
-	}*/
-
-	
-	
+   
+  
 	
 }

@@ -13,7 +13,7 @@ import application.service.Groupedao;
 
 @RestController
 @RequestMapping("/api/listgroupe")
-@CrossOrigin
+@CrossOrigin("*")
 public class GroupeController {
 	
 	@Autowired
