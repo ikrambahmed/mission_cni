@@ -10,7 +10,7 @@ public interface IMissionnaire {
   
 	List<Missionnaire> getMissionnaires() ; 
 	
-	void addMissionaire(Missionnaire missionaire) ; 
+	Missionnaire addMissionaire(Missionnaire missionaire) ; 
 	
 	void updateMissionaire(Missionnaire missionaire) ; 
 	

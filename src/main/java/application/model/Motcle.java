@@ -1,16 +1,23 @@
 package application.model;
 
 import java.io.Serializable;
+import java.util.Collection;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -42,6 +49,20 @@ public class Motcle implements Serializable {
     
     @Column(name = "IND")
     private Short ind;
+    
+    
+    
+    
+	@OneToMany(mappedBy="Motcle", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JsonIgnore
+	private Collection<Mission> missions;
+    
+    
+    
+    
+    
+    
+    
 
     public Motcle() {
     }

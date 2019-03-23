@@ -25,10 +25,6 @@ public class GradeController {
 		return gradedao.findAll();
 	}
 	
-	/*@GetMapping("api/listegrade")
-	public String getGrade(@RequestParam(name="name",defaultValue="")String name)
-	{
-		return gradedao.getGrade(name);
-	}*/
+
 
 }

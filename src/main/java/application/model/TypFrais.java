@@ -17,6 +17,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author dell
@@ -24,11 +26,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "TYP_FRAIS")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "TypFrais.findAll", query = "SELECT t FROM TypFrais t")
-    , @NamedQuery(name = "TypFrais.findByTypFrais", query = "SELECT t FROM TypFrais t WHERE t.typFrais = :typFrais")
-    , @NamedQuery(name = "TypFrais.findByLibFrais", query = "SELECT t FROM TypFrais t WHERE t.libFrais = :libFrais")
-    , @NamedQuery(name = "TypFrais.findByLibFraisl", query = "SELECT t FROM TypFrais t WHERE t.libFraisl = :libFraisl")})
 public class TypFrais implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,8 +44,9 @@ public class TypFrais implements Serializable {
     @Column(name = "LIB_FRAISL")
     private String libFraisl;
    
-    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "typFrais1", fetch = FetchType.EAGER)
-    private Collection<AvoirFrais> avoirFraisCollection;*/
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typFrais1")
+    @JsonIgnore
+    private Collection<AvoirFrais> avoirFraisCollection;
 
     public TypFrais() {
     }
@@ -119,5 +117,17 @@ public class TypFrais implements Serializable {
     public String toString() {
         return "entities.TypFrais[ typFrais=" + typFrais + " ]";
     }
+    @JsonIgnore
+	public Collection<AvoirFrais> getAvoirFraisCollection() {
+		return avoirFraisCollection;
+	}
+
+	public void setAvoirFraisCollection(Collection<AvoirFrais> avoirFraisCollection) {
+		this.avoirFraisCollection = avoirFraisCollection;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
     
 }

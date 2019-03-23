@@ -48,10 +48,15 @@ public class Mission implements Serializable{
 	    @JoinColumn(name = "CODE", insertable=false , updatable=false )
 	    @ManyToOne
 	    private DeptGen deptGen;
-
 	    
-	   /* @OneToMany(cascade = CascadeType.ALL, mappedBy = "mission", fetch = FetchType.EAGER)
-	    private Collection<OrdMis> ordMisCollection;*/
+	    
+	    @ManyToOne
+		private Motcle Motcle;
+	    
+	    
+	    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mission")
+	    @JsonIgnore
+	    private Collection<OrdMis> ordMisCollection;
 	    
 
 		public Mission(MissionPK missionPK, String objeta, String objetl, Date datdepP, Date datarrP, String codeMotcle,
@@ -141,6 +146,34 @@ public class Mission implements Serializable{
 
 		public void setDeptGen(DeptGen deptGen) {
 			this.deptGen = deptGen;
+		}
+
+
+
+
+		public Motcle getMotcle() {
+			return Motcle;
+		}
+
+
+
+
+		public void setMotcle(Motcle motcle) {
+			Motcle = motcle;
+		}
+
+
+
+
+		public Collection<OrdMis> getOrdMisCollection() {
+			return ordMisCollection;
+		}
+
+
+
+
+		public void setOrdMisCollection(Collection<OrdMis> ordMisCollection) {
+			this.ordMisCollection = ordMisCollection;
 		}
        
 	   

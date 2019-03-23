@@ -22,8 +22,8 @@ public class MissionnaireService implements IMissionnaire {
 		return missionnaireRepository.findAll() ; 	}
 
 	@Override
-	public void addMissionaire(Missionnaire missionaire) {
-		missionnaireRepository.save(missionaire) ; 
+	public Missionnaire addMissionaire(Missionnaire missionaire) {
+	return 	missionnaireRepository.save(missionaire) ; 
 		
 	}
 

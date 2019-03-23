@@ -9,11 +9,14 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -29,10 +32,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Fonction implements Serializable {
     private static final long serialVersionUID = 1L; 
    
-   /* @EmbeddedId
-    private FonctionPK fonctionPK;*/
-    
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FONCT_SEQ")
+    @SequenceGenerator(sequenceName = "fonction_seq", allocationSize = 1, name = "FONCT_SEQ")
+	@Column(name="FONCTION_ID")
+    private Long id ; 
+    
     @Column(name = "COD_FONCTION")
     private String codFonction;
     
@@ -46,13 +51,8 @@ public class Fonction implements Serializable {
 
     @Column(name = "TYP_FONC")
     private String typFonc;
-
-	//@MapsId("code")
-    @JoinColumn(name = "CODE", referencedColumnName = "CODE", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private DeptGen deptGen;
     
-	
+    
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "fonnction")
     @JsonIgnore
     private Collection<Missionnaire> missionnaireCollection;
@@ -65,6 +65,20 @@ public class Fonction implements Serializable {
 
 
 	
+
+	public Fonction(Long id, String codFonction, String libFonca, String libFoncl, String typFonc,
+			Collection<Missionnaire> missionnaireCollection) {
+		super();
+		this.id = id;
+		this.codFonction = codFonction;
+		this.libFonca = libFonca;
+		this.libFoncl = libFoncl;
+		this.typFonc = typFonc;
+		this.missionnaireCollection = missionnaireCollection;
+	}
+
+
+
 
 	public String getLibFonca() {
 		return libFonca;
@@ -114,22 +128,7 @@ public class Fonction implements Serializable {
 		this.codFonction = codFonction;
 	}
 
-
-
-
-	public DeptGen getDeptGen() {
-		return deptGen;
-	}
-
-
-
-
-	public void setDeptGen(DeptGen deptGen) {
-		this.deptGen = deptGen;
-	}
-
-
-
+	
 @JsonIgnore
 	public Collection<Missionnaire> getMissionnaireCollection() {
 		return missionnaireCollection;
@@ -140,6 +139,20 @@ public class Fonction implements Serializable {
 
 	public void setMissionnaireCollection(Collection<Missionnaire> missionnaireCollection) {
 		this.missionnaireCollection = missionnaireCollection;
+	}
+
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	

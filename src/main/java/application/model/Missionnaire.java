@@ -3,6 +3,7 @@ package application.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,15 +37,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Missionnaire implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Column(name="CIN")
     private String cin;
   
-    
     @Column(name="MATRICULE")
     private String matricule;
-    
-    
+      
     @Column(name = "nom")
 	
 	private String nom;
@@ -74,8 +75,6 @@ public class Missionnaire implements Serializable {
 	@Column(name = "ministr")
 	private String ministr;
     
- 
-    
     @JoinColumn(name = "COD_CAT", referencedColumnName = "COD_CAT")
     @ManyToOne
     private Categorie codCat;
@@ -94,34 +93,28 @@ public class Missionnaire implements Serializable {
     private Groupe codgrp;
 
 
-    @JoinColumn(name = "COD_GRD", referencedColumnName = "COD_GRD")
-    @ManyToOne 
+    @JoinColumn(name = "GRADE_ID", referencedColumnName = "GRADE_ID")
+    @ManyToOne(cascade = {CascadeType.ALL})
 	private Grade graade;
 	
-    @JoinColumn(name = "COD_FONCTION", referencedColumnName = "COD_FONCTION")
-    @ManyToOne 
+    @JoinColumn(name = "FONCTION_ID", referencedColumnName = "FONCTION_ID" )
+    @ManyToOne (cascade = {CascadeType.ALL})
   	private Fonction fonnction;
     
-    
-  	
-   
-    
-   /* @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name = "CODE", referencedColumnName = "CODE", insertable = false, updatable = false),
-        @JoinColumn(name = "COD_GRD", referencedColumnName = "COD_GRD", insertable = false, updatable = false),
-})
-    
-    private Grade grade;*/
-
-
-
-    
-    
-   
-
-
 	
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "missionnaire")
+    @JsonIgnore
+   	private Collection<OrdMis> ordMisCollection ;
+     
+    @JsonIgnore
+    public Collection<OrdMis> getOrdMisCollection() {
+		return ordMisCollection;
+	}
+
+	public void setOrdMisCollection(Collection<OrdMis> ordMisCollection) {
+		this.ordMisCollection = ordMisCollection;
+	}
 
 	public Missionnaire() {
     }

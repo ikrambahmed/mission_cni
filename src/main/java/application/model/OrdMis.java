@@ -2,9 +2,11 @@ package application.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -12,10 +14,13 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "ORD_MIS")
@@ -52,27 +57,6 @@ public class OrdMis implements Serializable{
     private String etat;
     
 
-    @Column(name = "COD_CAT")
-    private String codCat;
-    
-    @Column(name = "NIV_REM")
-    private Short nivRem;
-    
-  
-    @Column(name = "CLASSGRD")
-    private String classgrd;
-    
-
-    @Column(name = "COD_GRP")
-    private String codGrp;
-
-    @Column(name = "COD_FONCTION")
-    private String codFonction;
-    
-    @Column(name = "COD_GRD")
-    private String codGrd;
-    
-
     @Column(name = "NUM_PB")
     private String numPb;
     
@@ -91,8 +75,6 @@ public class OrdMis implements Serializable{
     @Column(name = "TAUX_SPEC")
     private BigDecimal tauxSpec;
     
-    @Column(name = "MINISTR")
-    private Short ministr;
     
     @Column(name = "AVANCE_OLD")
     private BigDecimal avanceOld;
@@ -105,71 +87,45 @@ public class OrdMis implements Serializable{
     private String resume;
     
 
-    
-
-   /* @JoinColumns({
+    @JoinColumns({
         @JoinColumn(name = "NUM_MISSION", referencedColumnName = "NUM_MISSION", insertable = false, updatable = false)
         , @JoinColumn(name = "CODE", referencedColumnName = "CODE", insertable = false, updatable = false)})
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Mission mission;*/
+    private Mission mission;
     
-   /*@JoinColumn(name = "CIN", referencedColumnName = "CIN")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Missionnaire cin;*/
+    @JoinColumn(name = "CIN", referencedColumnName = "CIN", insertable=false , updatable=false )
+    @ManyToOne
+    private Missionnaire missionnaire;
+    
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordMis")
+    @JsonIgnore
+    private Collection<AvoirFrais> avoirFraisCollection;
+    
+ 
+	public Mission getMission() {
+		return mission;
+	}
+
+	public void setMission(Mission mission) {
+		this.mission = mission;
+	}
 
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+	public Missionnaire getMissionnaire() {
+		return missionnaire;
+	}
+
+	public void setMissionnaire(Missionnaire missionnaire) {
+		this.missionnaire = missionnaire;
+	}
+
 	public OrdMis() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrdMis(OrdMisPK ordMisPK, Date datdepP, Date datarrP, Date datdepR, Date datarrR, BigDecimal timbr,
-			BigDecimal avance, String etat, String codCat, Short nivRem, String classgrd, String codGrp,
-			String codFonction, String codGrd, String numPb, Date datePay, BigDecimal avanceAcc, Date datRap,
-			String numOp, BigDecimal tauxSpec, Short ministr, BigDecimal avanceOld, String obsCtrl, String resume,
-			String typAv) {
-		super();
-		this.ordMisPK = ordMisPK;
-		this.datdepP = datdepP;
-		this.datarrP = datarrP;
-		this.datdepR = datdepR;
-		this.datarrR = datarrR;
-		this.timbr = timbr;
-		this.avance = avance;
-		this.etat = etat;
-		this.codCat = codCat;
-		this.nivRem = nivRem;
-		this.classgrd = classgrd;
-		this.codGrp = codGrp;
-		this.codFonction = codFonction;
-		this.codGrd = codGrd;
-		this.numPb = numPb;
-		this.datePay = datePay;
-		this.avanceAcc = avanceAcc;
-		this.datRap = datRap;
-		this.numOp = numOp;
-		this.tauxSpec = tauxSpec;
-		this.ministr = ministr;
-		this.avanceOld = avanceOld;
-		this.obsCtrl = obsCtrl;
-		this.resume = resume;
-		this.typAv = typAv;
-	}
-
+	
 	public OrdMisPK getOrdMisPK() {
 		return ordMisPK;
 	}
@@ -234,53 +190,7 @@ public class OrdMis implements Serializable{
 		this.etat = etat;
 	}
 
-	public String getCodCat() {
-		return codCat;
-	}
-
-	public void setCodCat(String codCat) {
-		this.codCat = codCat;
-	}
-
-	public Short getNivRem() {
-		return nivRem;
-	}
-
-	public void setNivRem(Short nivRem) {
-		this.nivRem = nivRem;
-	}
-
-	public String getClassgrd() {
-		return classgrd;
-	}
-
-	public void setClassgrd(String classgrd) {
-		this.classgrd = classgrd;
-	}
-
-	public String getCodGrp() {
-		return codGrp;
-	}
-
-	public void setCodGrp(String codGrp) {
-		this.codGrp = codGrp;
-	}
-
-	public String getCodFonction() {
-		return codFonction;
-	}
-
-	public void setCodFonction(String codFonction) {
-		this.codFonction = codFonction;
-	}
-
-	public String getCodGrd() {
-		return codGrd;
-	}
-
-	public void setCodGrd(String codGrd) {
-		this.codGrd = codGrd;
-	}
+	
 
 	public String getNumPb() {
 		return numPb;
@@ -330,13 +240,6 @@ public class OrdMis implements Serializable{
 		this.tauxSpec = tauxSpec;
 	}
 
-	public Short getMinistr() {
-		return ministr;
-	}
-
-	public void setMinistr(Short ministr) {
-		this.ministr = ministr;
-	}
 
 	public BigDecimal getAvanceOld() {
 		return avanceOld;
@@ -370,9 +273,15 @@ public class OrdMis implements Serializable{
 		this.typAv = typAv;
 	}
 
+	@JsonIgnore
+	public Collection<AvoirFrais> getAvoirFraisCollection() {
+		return avoirFraisCollection;
+	}
 
+	public void setAvoirFraisCollection(Collection<AvoirFrais> avoirFraisCollection) {
+		this.avoirFraisCollection = avoirFraisCollection;
+	}
     
-    
-    
+       
     
 }

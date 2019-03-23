@@ -18,13 +18,6 @@ import javax.persistence.Table;
 
 @Entity
 public class Utilisateur {
-
-	/*@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="USER_ID")
-	private Long id;
-	
-	@Column(unique=true)*/
 	
 	@Id
 	private String username;
@@ -41,6 +34,9 @@ public class Utilisateur {
 	inverseJoinColumns={@JoinColumn(name="ROLE_ID")})
 	private List<Role> roles;
 	
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="user_stract")
+	private Collection <DeptGen> deptGenCollection ; 
 	
 	
 	public String getNom() {
@@ -98,14 +94,6 @@ public class Utilisateur {
 		// TODO Auto-generated constructor stub
 	}
 
-	/*public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}*/
-
 	public String getUsername() {
 		return username;
 	}
@@ -137,5 +125,17 @@ public class Utilisateur {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+
+	
+	public Collection<DeptGen> getDeptGenCollection() {
+		return deptGenCollection;
+	}
+
+	public void setDeptGenCollection(Collection<DeptGen> deptGenCollection) {
+		this.deptGenCollection = deptGenCollection;
+	}
+	
+	
+	
 	
 }

@@ -17,6 +17,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author dell
@@ -41,8 +43,9 @@ public class Zone implements Serializable {
     @Column(name = "LIB_ZONEL")
     private String libZonel;
    
-    /*@OneToMany(mappedBy = "codZone", fetch = FetchType.EAGER)
-    private Collection<Pays> paysCollection;*/
+    @OneToMany(mappedBy = "codZone")
+    @JsonIgnore
+    private Collection<Pays> paysCollection;
 
     public Zone() {
     }
@@ -113,5 +116,13 @@ public class Zone implements Serializable {
     public String toString() {
         return "entities.Zone[ codZone=" + codZone + " ]";
     }
+    @JsonIgnore
+	public Collection<Pays> getPaysCollection() {
+		return paysCollection;
+	}
+
+	public void setPaysCollection(Collection<Pays> paysCollection) {
+		this.paysCollection = paysCollection;
+	}
     
 }

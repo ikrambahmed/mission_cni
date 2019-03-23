@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,6 +16,7 @@ import javax.persistence.MapsId;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,11 +31,17 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "GRADE")
 @XmlRootElement
 public class Grade implements Serializable {
-    private static final long serialVersionUID = 1L;
-   
-   /*@EmbeddedId
-    private GradePK gradePK;*/
+    
+	
+	private static final long serialVersionUID = 1L;
+      
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GRAD_SEQ")
+    @SequenceGenerator(sequenceName = "grade_seq", allocationSize = 1, name = "GRAD_SEQ")
+	@Column(name="GRADE_ID")
+	private Long id;
+
+    
     @Column(name = "COD_GRD")
     private String codGrd;
   
@@ -42,12 +51,6 @@ public class Grade implements Serializable {
     @Column(name = "LIB_GRDL")
     private String libGrdl;
     
-
-	@MapsId("code")
-    @JoinColumn(name = "CODE", referencedColumnName = "CODE", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private DeptGen deptGen;
-
 	
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "graade")
 	private Collection<Missionnaire> missionnaire;
@@ -75,16 +78,21 @@ public Grade() {
 
 
 
-public Grade(GradePK gradePK, String libGrda, String libGrdl) {
+
+
+
+
+
+
+
+public Grade(Long id, String codGrd, String libGrda, String libGrdl, Collection<Missionnaire> missionnaire) {
 	super();
-	//this.gradePK = gradePK;
+	this.id = id;
+	this.codGrd = codGrd;
 	this.libGrda = libGrda;
 	this.libGrdl = libGrdl;
+	this.missionnaire = missionnaire;
 }
-
-
-
-
 
 
 public String getLibGrda() {
@@ -120,20 +128,6 @@ public static long getSerialversionuid() {
 }
 
 
-
-
-public DeptGen getDeptGen() {
-	return deptGen;
-}
-
-
-
-
-public void setDeptGen(DeptGen deptGen) {
-	this.deptGen = deptGen;
-}
-
-
 public String getCodGrd() {
 	return codGrd;
 }
@@ -142,5 +136,18 @@ public String getCodGrd() {
 public void setCodGrd(String codGrd) {
 	this.codGrd = codGrd;
 }
+
+
+public Long getId() {
+	return id;
+}
+
+
+public void setId(Long id) {
+	this.id = id;
+}
+
+
+
 
 }

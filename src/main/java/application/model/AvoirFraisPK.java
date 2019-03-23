@@ -10,11 +10,7 @@ import javax.validation.constraints.Size;
 @Embeddable
 public class AvoirFraisPK implements Serializable {
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 6)
-    @Column(name = "CODE")
-    private String code;
+ 
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 6)
@@ -34,17 +30,23 @@ public class AvoirFraisPK implements Serializable {
     @Size(min = 1, max = 2)
     @Column(name = "COD_PAYS")
     private String codPays;
+    
+    @Column(name = "CIN")
+    private String cin;
+    
+    
 
-    public AvoirFraisPK() {
+    public String getCin() {
+		return cin;
+	}
+
+	public void setCin(String cin) {
+		this.cin = cin;
+	}
+
+	public AvoirFraisPK() {
     }
 
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
 
 	public String getNumMission() {
 		return numMission;
@@ -78,11 +80,10 @@ public class AvoirFraisPK implements Serializable {
 		this.codPays = codPays;
 	}
 
-	public AvoirFraisPK(@NotNull @Size(min = 1, max = 6) String code,
+	public AvoirFraisPK(
 			@NotNull @Size(min = 1, max = 6) String numMission, @NotNull short numord,
 			@NotNull @Size(min = 1, max = 2) String typFrais, @NotNull @Size(min = 1, max = 2) String codPays) {
 		super();
-		this.code = code;
 		this.numMission = numMission;
 		this.numord = numord;
 		this.typFrais = typFrais;

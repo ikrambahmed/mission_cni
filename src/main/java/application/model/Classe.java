@@ -13,10 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
-/**
- * The persistent class for the CLASSE database table.
- * 
- */
 @Entity
 @Table(name = "CLASSE")
 @XmlRootElement

@@ -19,6 +19,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author dell
@@ -58,12 +60,17 @@ public class Pays implements Serializable {
     @Column(name = "POUR")
     private String pour;
     
-    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "pays", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pays")
+    @JsonIgnore
     private Collection<AvoirFrais> avoirFraisCollection;
+   
+   
+    
     @JoinColumn(name = "COD_ZONE", referencedColumnName = "COD_ZONE")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Zone codZone;*/
+    @ManyToOne
+    private Zone codZone;
 
+    
     public Pays() {
     }
 
@@ -168,5 +175,25 @@ public class Pays implements Serializable {
     public String toString() {
         return "entities.Pays[ codPays=" + codPays + " ]";
     }
+    @JsonIgnore
+	public Collection<AvoirFrais> getAvoirFraisCollection() {
+		return avoirFraisCollection;
+	}
+
+	public void setAvoirFraisCollection(Collection<AvoirFrais> avoirFraisCollection) {
+		this.avoirFraisCollection = avoirFraisCollection;
+	}
+
+	public Zone getCodZone() {
+		return codZone;
+	}
+
+	public void setCodZone(Zone codZone) {
+		this.codZone = codZone;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
     
 }

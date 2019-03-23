@@ -16,6 +16,10 @@ public class OrdMisPK implements Serializable {
  
     @Column(name = "CODE")
     private String code;
+
+    @Column(name="CIN")
+    private String cin;
+
     
     @Column(name = "NUMORD")
     private short numord;
@@ -27,13 +31,7 @@ public class OrdMisPK implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public OrdMisPK(@NotNull @Size(min = 1, max = 6) String code, @NotNull short numord,
-			@NotNull @Size(min = 1, max = 6) String numMission) {
-		super();
-		this.code = code;
-		this.numord = numord;
-		this.numMission = numMission;
-	}
+	
 	public String getCode() {
 		return code;
 	}
@@ -51,6 +49,14 @@ public class OrdMisPK implements Serializable {
 	}
 	public void setNumMission(String numMission) {
 		this.numMission = numMission;
+	}
+
+	public String getCin() {
+		return cin;
+	}
+
+	public void setCin(String cin) {
+		this.cin = cin;
 	}
 
 

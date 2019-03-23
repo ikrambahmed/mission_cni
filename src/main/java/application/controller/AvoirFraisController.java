@@ -1,11 +1,9 @@
 package application.controller;
 
 import java.util.List;
-
-import javax.validation.Valid;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,43 +12,45 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import application.model.Missionnaire;
-import application.model.Mission;
-import application.service.Missiondao;
-
+import application.model.AvoirFrais;
+import application.service.AvoirFraisDao;
 
 @RestController
-@RequestMapping("/api/mission")
+@RequestMapping("/api")
 @CrossOrigin("*")
-public class MissionController {
-	
+public class AvoirFraisController {
+
 	@Autowired
-	Missiondao missiondao;
+	private AvoirFraisDao avoirFrais ; 
+	
+
+		
+	@GetMapping("/listeFrais")
+	public List<AvoirFrais> getFrais() {
+		return avoirFrais.getFrais() ;  
+	}
 	
 	
-	@GetMapping
-	public List<Mission> getMissionaires() {
-		return missiondao.getMissions() ; 
+	@PostMapping("/addFrais")
+	public AvoirFrais addFrais(@RequestBody AvoirFrais frais) {
+		return avoirFrais.addFrais(frais); 
+	}
+	
+	
+	@PutMapping("/updateFrais")
+	public void updateFrais(@RequestBody AvoirFrais frais) {
+		avoirFrais.updateFrais(frais);
 		
 	}
-	@PostMapping
-	public Mission addMission(@RequestBody Mission Mission)
-	{
-		return missiondao.addMission(Mission);
+	
+	@DeleteMapping("delete")
+public void deleteFrais(@RequestBody AvoirFrais frais) {		
 	}
 	
-	@PutMapping
-	public void updateMission(@RequestBody Mission missiona)
-	{
-		missiondao.updateMission(missiona);
-		
-	}
-	@DeleteMapping("/{code}")
-	public void deleteMission(@PathVariable Long code)
-	{
-		missiondao.deleteMission(code);
-	}
+	
+	
 	
 }
