@@ -38,11 +38,7 @@ public class Mission implements Serializable{
 	    @Column(name = "DATARR_P")
 	    private Date datarrP;
 
-	    @Column(name = "CODE_MOTCLE")
-	    private String codeMotcle;
-	    
-	    @Column(name = "CODETHEME")
-	    private String codetheme;
+	   
 	    
 
 	    @JoinColumn(name = "CODE", insertable=false , updatable=false )
@@ -67,8 +63,7 @@ public class Mission implements Serializable{
 			this.objetl = objetl;
 			this.datdepP = datdepP;
 			this.datarrP = datarrP;
-			this.codeMotcle = codeMotcle;
-			this.codetheme = codetheme;
+			
 		}
 
 	
@@ -119,21 +114,7 @@ public class Mission implements Serializable{
 			this.datarrP = datarrP;
 		}
 
-		public String getCodeMotcle() {
-			return codeMotcle;
-		}
-
-		public void setCodeMotcle(String codeMotcle) {
-			this.codeMotcle = codeMotcle;
-		}
-
-		public String getCodetheme() {
-			return codetheme;
-		}
-
-		public void setCodetheme(String codetheme) {
-			this.codetheme = codetheme;
-		}
+	
 
 
 

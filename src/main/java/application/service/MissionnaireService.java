@@ -45,7 +45,7 @@ public class MissionnaireService implements IMissionnaire {
 
 	public Optional<Missionnaire> getMissionnaire(String cin) {
 		// TODO Auto-generated method stub
-		return null;
+		return missionnaireRepository.getMiss(cin) ; 
 	}
 
 	

@@ -27,10 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/**
- *
- * @author dell
- */
+
 @Entity
 @Table(name = "MISSIONNAIRE")
 @XmlRootElement

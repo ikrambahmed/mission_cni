@@ -29,7 +29,7 @@ public class MissionnaireController {
 	@Autowired
 	private MissionnaireService missionaireService ; 
 	
-	@GetMapping(value="lista")
+	@GetMapping(value="/lista")
 	  public Optional<Missionnaire> getMiss(@RequestParam(name="cin",defaultValue="")String cin)
 	    {
 		  return missionaireService.getMissionnaire(cin) ; 

@@ -14,7 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Utilisateur {
@@ -34,11 +37,21 @@ public class Utilisateur {
 	inverseJoinColumns={@JoinColumn(name="ROLE_ID")})
 	private List<Role> roles;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="user_stract")
-	private Collection <DeptGen> deptGenCollection ; 
 	
-	
+	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateur")
+	  @JsonIgnore
+	  private Collection <UserStruct> userCollection ; 
+	    
+	  
+	@JsonIgnore
+	public Collection<UserStruct> getUserCollection() {
+		return userCollection;
+	}
+
+	public void setUserCollection(Collection<UserStruct> userCollection) {
+		this.userCollection = userCollection;
+	}
+
 	public String getNom() {
 		return nom;
 	}
@@ -127,13 +140,6 @@ public class Utilisateur {
 	}
 
 	
-	public Collection<DeptGen> getDeptGenCollection() {
-		return deptGenCollection;
-	}
-
-	public void setDeptGenCollection(Collection<DeptGen> deptGenCollection) {
-		this.deptGenCollection = deptGenCollection;
-	}
 	
 	
 	
